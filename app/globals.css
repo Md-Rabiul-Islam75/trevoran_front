@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* Trevoran colours: deep navy, ivory, camel. */
+@theme {
+  --color-navy: #0e1828;
+  --color-ivory: #f4efe6;
+  --color-ivory-2: #e9e1d3;
+  --color-camel: #c9a46c;
+}
+
+@theme inline {
+  --font-display: var(--font-bodoni), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  background: var(--color-navy);
+}
+
+body {
+  background: var(--color-navy);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+}
+
+/* Coming-soon layout.
+   Phone: wordmark, picture, text, footer (one column).
+   Laptop (1024px+): text on the left, picture filling the right half. */
+.cs-grid {
+  display: grid;
+  min-height: 100dvh;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "header" "panel" "content" "footer";
+}
+@media (min-width: 1024px) {
+  .cs-grid {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "header panel"
+      "content panel"
+      "footer panel";
+  }
+}
+.area-header { grid-area: header; }
+.area-panel { grid-area: panel; }
+.area-content { grid-area: content; }
+.area-footer { grid-area: footer; }
+
+/* Piqué knit texture (the polo-shirt fabric) for the picture panel. */
+.pique {
+  background-color: var(--color-ivory);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Ccircle cx='2' cy='2' r='1' fill='%230e1828' fill-opacity='.07'/%3E%3Ccircle cx='6' cy='6' r='1' fill='%230e1828' fill-opacity='.07'/%3E%3C/svg%3E");
+}
+
+/* Dashed "stitching" line inside the panel. */
+.stitch {
+  outline: 1.5px dashed color-mix(in srgb, var(--color-navy) 26%, transparent);
+  outline-offset: -14px;
+}
+@media (min-width: 1024px) {
+  .stitch { outline-offset: -22px; }
+}
+
+/* Gentle rise-in on load; switched off for visitors who prefer less motion. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; }
+}
