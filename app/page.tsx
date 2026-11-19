@@ -27,9 +27,9 @@ function Chevron({ className }: { className?: string }) {
 
 function Header() {
   return (
-    <header className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-4 px-5 pt-5 sm:px-10 sm:pt-7 lg:px-16">
+    <header className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-3 px-5 pt-5 sm:px-10 sm:pt-7 lg:px-page">
       <a href="#top" className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-camel">
-        <Image src={site.logo} alt={site.name} width={974} height={177} preload className="h-8 w-auto sm:h-10" />
+        <Image src={site.logo} alt={site.name} width={974} height={177} preload className="h-7 w-auto sm:h-10" />
       </a>
       <nav aria-label="Sections" className="hidden items-center gap-9 lg:flex">
         {site.nav.map((item) => (
@@ -42,7 +42,8 @@ function Header() {
           </a>
         ))}
       </nav>
-      <span className="inline-flex items-center gap-2 rounded-full border border-camel/60 bg-navy/30 px-3.5 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.24em] backdrop-blur-sm">
+      {/* Hidden below 360px wide: there is no room beside the logo, and every slide already says "Coming soon" */}
+      <span className="hidden items-center gap-2 rounded-full border border-camel/60 bg-navy/30 px-3 py-1.5 text-[0.6rem] font-medium tracking-[0.18em] whitespace-nowrap uppercase backdrop-blur-sm min-[360px]:inline-flex sm:px-3.5 sm:text-[0.65rem] sm:tracking-[0.24em]">
         <span aria-hidden className="pulse-dot h-1.5 w-1.5 rounded-full bg-camel" />
         Coming soon
       </span>
@@ -80,24 +81,25 @@ function Collection() {
         <div className="reveal grid gap-6 lg:grid-cols-2 lg:items-end">
           <div>
             <Eyebrow tone="bronze">{c.eyebrow}</Eyebrow>
-            <h2 id="collection-title" className="mt-5 font-display text-5xl leading-[1.02] font-normal sm:text-6xl lg:text-7xl">
+            <h2 id="collection-title" className="mt-5 font-display text-5xl text-balance leading-[1.02] font-normal sm:text-6xl xl:text-7xl">
               {c.title.before} <em className="text-bronze">{c.title.emphasis}</em>
             </h2>
           </div>
           <p className="max-w-md text-lg leading-relaxed text-navy/70 lg:justify-self-end">{c.intro}</p>
         </div>
 
-        {/* Phones: swipe sideways through the cards. Tablets and laptops: three columns. */}
-        <ul className="reveal no-scrollbar -mx-5 mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0">
+        {/* Phones and small tablets: swipe sideways through the cards (scroll-px keeps the page margin
+            when a card snaps into place). From 768px wide: three columns. */}
+        <ul className="reveal no-scrollbar -mx-5 mt-14 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-2 sm:-mx-10 sm:scroll-px-10 sm:px-10 md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0">
           {c.items.map((item, i) => (
-            <li key={item.kind} className="w-[78%] shrink-0 snap-start sm:w-auto">
+            <li key={item.kind} className="w-[78%] shrink-0 snap-start sm:w-[46%] md:w-auto">
               <article className="group">
                 <div className="relative aspect-4/5 overflow-hidden rounded-sm bg-ivory-2">
                   <Image
                     src={item.photo.src}
                     alt={item.photo.alt}
                     fill
-                    sizes="(min-width: 640px) 33vw, 78vw"
+                    sizes="(min-width: 768px) 33vw, (min-width: 640px) 46vw, 78vw"
                     className="object-cover transition-transform duration-1200 ease-out group-hover:scale-105"
                   />
                   {/* The same garment on a model: fades in on hover (laptops) */}
@@ -105,7 +107,7 @@ function Collection() {
                     src={item.model.src}
                     alt={item.model.alt}
                     fill
-                    sizes="(min-width: 640px) 33vw, 78vw"
+                    sizes="(min-width: 768px) 33vw, (min-width: 640px) 46vw, 78vw"
                     className="object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
                   />
                   <span className="absolute top-4 left-4 rounded-full bg-navy px-3 py-1 text-[0.6rem] font-medium tracking-[0.24em] text-ivory uppercase">
@@ -167,7 +169,7 @@ function Lookbook() {
       <div className="mx-auto grid max-w-7xl gap-14 px-5 sm:px-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20 lg:px-16">
         <div className="reveal lg:sticky lg:top-16 lg:self-start lg:pt-16">
           <Eyebrow>{l.eyebrow}</Eyebrow>
-          <h2 id="lookbook-title" className="mt-5 font-display text-5xl leading-[1.02] font-normal sm:text-6xl lg:text-7xl">
+          <h2 id="lookbook-title" className="mt-5 font-display text-5xl text-balance leading-[1.02] font-normal sm:text-6xl xl:text-7xl">
             {l.title.before} <em className="text-camel">{l.title.emphasis}</em>
           </h2>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-ivory/75">{l.text}</p>
@@ -204,7 +206,7 @@ function OurPromise() {
       <div className="mx-auto max-w-7xl px-5 sm:px-10 lg:px-16">
         <div className="reveal">
           <Eyebrow tone="bronze">{p.eyebrow}</Eyebrow>
-          <h2 id="promise-title" className="mt-5 font-display text-5xl leading-[1.02] font-normal sm:text-6xl">
+          <h2 id="promise-title" className="mt-5 font-display text-5xl text-balance leading-[1.02] font-normal sm:text-6xl">
             {p.title.before} <em className="text-bronze">{p.title.emphasis}</em>
           </h2>
         </div>
@@ -243,7 +245,7 @@ function Launch() {
           sizes="(min-width: 640px) 560px, 90vw"
           className="reveal mx-auto h-auto w-[min(560px,90%)]"
         />
-        <h2 id="launch-title" className="reveal mt-16 font-display text-5xl leading-[1.04] font-normal sm:text-6xl">
+        <h2 id="launch-title" className="reveal mt-16 font-display text-5xl text-balance leading-[1.04] font-normal sm:text-6xl">
           {l.title.before} <em className="text-camel">{l.title.emphasis}</em>
         </h2>
         <p className="reveal mx-auto mt-6 max-w-md text-lg leading-relaxed text-ivory/75">{l.text}</p>
@@ -274,8 +276,8 @@ function Launch() {
 function Footer() {
   return (
     <footer className="border-t border-ivory/10">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-16">
-        <Image src={site.logo} alt={site.name} width={974} height={177} className="h-7 w-auto self-start sm:self-auto" />
+      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-10 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-16">
+        <Image src={site.logo} alt={site.name} width={974} height={177} className="h-7 w-auto self-start lg:self-auto" />
         <nav aria-label="Footer" className="flex flex-wrap gap-x-7 gap-y-2">
           {site.nav.map((item) => (
             <a

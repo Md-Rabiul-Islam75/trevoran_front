@@ -67,7 +67,7 @@ export function HeroSlider({ slides, comingSoon }: Props) {
               <div className="absolute inset-x-0 top-0 h-32 bg-linear-to-b from-navy/70 to-transparent" />
             </div>
 
-            <div className="absolute inset-x-0 bottom-28 px-5 sm:bottom-32 sm:px-10 lg:inset-y-0 lg:flex lg:w-[52%] lg:flex-col lg:justify-center lg:px-16">
+            <div className="hero-text absolute inset-x-0 bottom-28 px-5 sm:bottom-32 sm:px-10 lg:inset-y-0 lg:flex lg:w-[52%] lg:flex-col lg:justify-center lg:pr-16 lg:pl-page">
               <p className="hero-in flex items-center gap-3 text-[0.7rem] font-medium uppercase tracking-[0.28em] text-camel" style={{ animationDelay: "150ms" }}>
                 <span aria-hidden className="hero-rule h-px w-8 bg-camel" />
                 {s.eyebrow}
@@ -112,7 +112,7 @@ export function HeroSlider({ slides, comingSoon }: Props) {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-navy)_85%)]" />
           </div>
 
-          <div className="relative flex h-full flex-col items-center justify-center px-5 pb-16 text-center">
+          <div className="hero-text relative flex h-full flex-col items-center justify-center px-5 pb-16 text-center">
             <p className="hero-in text-[0.7rem] font-medium uppercase tracking-[0.4em] text-camel" style={{ animationDelay: "100ms" }}>
               {comingSoon.eyebrow}
             </p>
@@ -151,7 +151,7 @@ export function HeroSlider({ slides, comingSoon }: Props) {
       </div>
 
       {/* Controls: one per slide, each with a progress bar; plus pause / play */}
-      <div className="absolute inset-x-0 bottom-0 z-10 flex items-end gap-3 px-5 pb-6 sm:gap-5 sm:px-10 sm:pb-8 lg:px-16">
+      <div className="absolute inset-x-0 bottom-0 z-10 flex items-end gap-3 px-5 pb-6 sm:gap-5 sm:px-10 sm:pb-8 lg:px-page">
         <ol className="grid flex-1 grid-cols-4 gap-2 sm:gap-4">
           {controls.map((c, i) => (
             <li key={c.label}>
@@ -164,7 +164,8 @@ export function HeroSlider({ slides, comingSoon }: Props) {
                   active === i ? "text-ivory" : "text-ivory/50 hover:text-ivory/80"
                 }`}
               >
-                <span className="flex items-center gap-2 text-[0.65rem] font-medium uppercase tracking-[0.2em] sm:text-xs">
+                {/* nowrap + tighter letter spacing on small phones, so "T-shirts" never breaks onto two lines */}
+                <span className="flex items-center gap-2 text-[0.6rem] font-medium tracking-[0.1em] whitespace-nowrap uppercase min-[360px]:text-[0.65rem] min-[360px]:tracking-[0.16em] sm:text-xs sm:tracking-[0.2em]">
                   {c.kind ? (
                     <Garment kind={c.kind} strokeWidth={1.4} className="hidden h-5 w-5 sm:block" />
                   ) : (

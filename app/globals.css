@@ -35,6 +35,15 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Ccircle cx='2' cy='2' r='1' fill='%230e1828' fill-opacity='.07'/%3E%3Ccircle cx='6' cy='6' r='1' fill='%230e1828' fill-opacity='.07'/%3E%3C/svg%3E");
 }
 
+/* Side padding that lines full-width parts (header, slider) up with the sections below, which are
+   80rem wide with 4rem padding: on screens wider than 80rem the content starts at the same left edge. */
+@utility px-page {
+  padding-inline: max(4rem, calc((100% - 80rem) / 2 + 4rem));
+}
+@utility pl-page {
+  padding-left: max(4rem, calc((100% - 80rem) / 2 + 4rem));
+}
+
 /* Sideways card list on phones: no visible scrollbar. */
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -53,6 +62,10 @@ body {
   visibility: visible;
   transition: opacity 0.9s ease;
 }
+
+/* The leaving slide's text fades out quickly, so two titles never overlap during the cross-fade. */
+.hero-slide .hero-text { transition: opacity 0.3s ease; }
+.hero-slide:not(.is-active) .hero-text { opacity: 0; }
 
 /* Each animation only runs while its slide is active, so it starts again every time the slide comes back. */
 .hero-slide.is-active .hero-photo { animation: zoom-out 6.5s cubic-bezier(0.2, 0.6, 0.2, 1) both; }
